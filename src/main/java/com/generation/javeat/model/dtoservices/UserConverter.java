@@ -2,6 +2,7 @@ package com.generation.javeat.model.dtoservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoBase;
 import com.generation.javeat.model.dto.user.UserDtoR;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
@@ -47,6 +48,18 @@ public class UserConverter
                 .phone(u.getPhone())
                 .positionX(u.getPositionX())
                 .positionY(u.getPositionY())
+                .build();
+    }
+
+    public User RegisterToUser(RegisterRequest dto) {
+
+        return User
+                .builder()
+                .mail(dto.getMail())
+                .password(dto.getPassword())
+                .phone(dto.getPhone())
+                .positionX(dto.getPositionX())
+                .positionY(dto.getPositionY())
                 .build();
     }
 }

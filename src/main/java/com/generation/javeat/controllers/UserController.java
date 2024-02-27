@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.javeat.model.dto.login.LoginRequest;
+import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.dtoservices.UserConverter;
 import com.generation.javeat.model.entities.User;
@@ -37,5 +38,31 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+
+    @PostMapping("/user/register")
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest dto) {
+        User q = conv.RegisterToUser(dto);
+
+        // Verifica complessiva della password usando un'espressione regolare
+        if (!isValidPassword(q.getPassword())) {
+            return ResponseEntity.badRequest().body("La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
+        }
+
+        if (!isValidEmail(q.getMail())) {
+            return ResponseEntity.badRequest().body("La email non è valida");
+        }
+
+        return ResponseEntity.ok(repo.save(q));
+    }
+
+    private boolean isValidPassword(String password) {
+        String passwordPattern = "^(?=.[@#$%&*!]).{8,}$";
+        return password.matches(passwordPattern);
+    }
+
+    public static boolean isValidEmail(String email) {
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        return email.matches(emailPattern);
     }
 }
