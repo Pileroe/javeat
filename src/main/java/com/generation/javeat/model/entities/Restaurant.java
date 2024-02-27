@@ -43,6 +43,6 @@ public class Restaurant {
     private Menu menu;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "myDeliveries", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Delivery> deliveries; // da rivedere il nome
 }
