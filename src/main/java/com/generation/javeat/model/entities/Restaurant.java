@@ -34,8 +34,8 @@ public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String phone, imgUrl;
-    private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance, name;
+    private String phone, imgUrl, name;
+    private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
     private double deliveryPricePerUnit;
     
 
