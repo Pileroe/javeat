@@ -6,4 +6,6 @@ import com.generation.javeat.model.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
+    User findByMail(String mail);
+
 }
