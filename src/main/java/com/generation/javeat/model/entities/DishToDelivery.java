@@ -1,11 +1,7 @@
 package com.generation.javeat.model.entities;
 
-import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,23 +20,24 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Dish 
+public class DishToDelivery 
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name, category; 
-    private List<String> ingredients; 
-    private double price; 
+    private int quantity; 
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-    private Set<DishToDelivery> deliveries; 
 
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "menu_id") 
-    private Menu menu; 
-    
+    @JoinColumn(name = "dish_id") 
+    private Dish dish; 
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "delivery_id") 
+    private Delivery delivery; 
+
 }
