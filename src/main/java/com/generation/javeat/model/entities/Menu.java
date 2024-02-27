@@ -37,6 +37,6 @@ public class Menu {
     private Restaurant restaurant;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "myDishes", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Dish> dishes;
 }
