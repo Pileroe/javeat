@@ -41,7 +41,7 @@ public class Dish
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "ingredient", joinColumns = @JoinColumn(name = "dish_id"))
     @Column(name = "ingredients", nullable = false)
-    private List<String> ingredients = new ArrayList<>();
+    private List<String> ingredients;
 
     @JsonIgnore
     @OneToMany(mappedBy = "dish", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
