@@ -34,13 +34,13 @@ public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String phone, imgUrl;
-    private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance, name;
+    private String name, phone, imgUrl;
+    private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
     private double deliveryPricePerUnit;
     
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "foodType", joinColumns = @JoinColumn(name = "restauran_id"))
+    @CollectionTable(name = "foodType", joinColumns = @JoinColumn(name = "restaurant_id"))
     @Column(name = "foodTypes", nullable = false)
     private List<String> foodTypes;
 
