@@ -23,12 +23,12 @@ import lombok.experimental.SuperBuilder;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String mail;
     private String password;
     private String phone;
-    private int positionY;
-    private int positionX;
+    private Integer positionY;
+    private Integer positionX;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
