@@ -1,11 +1,15 @@
 package com.generation.javeat.model.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,8 +35,13 @@ public class Dish
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name, category; 
-    private List<String> ingredients; 
     private double price; 
+
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "ingredient", joinColumns = @JoinColumn(name = "dish_id"))
+    @Column(name = "ingredients", nullable = false)
+    private List<String> ingredients = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "dish", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
