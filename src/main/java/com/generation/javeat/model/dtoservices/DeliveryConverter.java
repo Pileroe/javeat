@@ -3,8 +3,8 @@ package com.generation.javeat.model.dtoservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.generation.javeat.model.dto.delivery.DelveryInstRqstDto;
-import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
+import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.dto.user.UserDtoR;
 import com.generation.javeat.model.entities.Delivery;
 import com.generation.javeat.model.entities.Restaurant;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class DeliveryConverte 
+public class DeliveryConverter 
 {
     @Autowired
     DeliveryRepository dRepo;
@@ -37,7 +37,7 @@ public class DeliveryConverte
     // private String notes;
     // private List<Integer> dishesId;
 
-    public Delivery deliveryDtoRqstDelivery(DelveryInstRqstDto del)
+    public Delivery deliveryDtoRqstDelivery(DeliveryInstRqstDto del)
     {
         User user = uRepo.findById(del.getIdUser()).get();
         Restaurant restaurant = rRepo.findById(del.getIdRestaurant()).get();

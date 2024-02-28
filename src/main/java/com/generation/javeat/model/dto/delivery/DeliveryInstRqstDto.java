@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class DelveryInstRqstDto 
+public class DeliveryInstRqstDto 
 {
     private Integer idRestaurant;
     private Integer idUser;
