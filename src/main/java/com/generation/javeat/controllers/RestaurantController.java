@@ -11,6 +11,9 @@ import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
 import com.generation.javeat.model.dtoservices.RestaurantConverter;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.RestaurantRepository;
+import static  com.generation.javeat.utils.Utils.*;
+
+
 
 
 @RestController
@@ -35,20 +38,5 @@ public class RestaurantController {
 
         return filtratiDistanza.stream().filter(f -> !Collections.disjoint(f.getFoodTypes(), dto.getFoodTypes()))
                 .map(e -> RConv.restaurantDtoWNoDellivery(e)).toList();
-    }
-
-    public double calculateDistanceToRestaurant(Restaurant restaurant, Integer userX, Integer userY) {            
-         // Coordinate del ristorante         
-         int restaurantX = restaurant.getPositionX();         
-         int restaurantY = restaurant.getPositionY();          
-         // Calcola la differenza tra le coordinate x e y         
-         int diffX = restaurantX - userX;         
-         int diffY = restaurantY - userY;          
-         // Calcola la somma dei quadrati delle differenze         
-         int squaredDiffX = diffX * diffX;         
-         int squaredDiffY = diffY * diffY;          
-         // Calcola la radice quadrata della somma dei quadrati delle differenze         
-         double distance = Math.sqrt(squaredDiffX + squaredDiffY);          
-         return distance;     
     }
 }

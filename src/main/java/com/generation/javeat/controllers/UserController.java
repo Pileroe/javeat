@@ -13,6 +13,7 @@ import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.dtoservices.UserConverter;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.UserRepository;
+import static  com.generation.javeat.utils.Utils.*;
 
 @RestController
 public class UserController {
@@ -55,14 +56,5 @@ public class UserController {
 
         return ResponseEntity.ok(repo.save(q));
     }
-
-    private boolean isValidPassword(String password) {
-        String passwordPattern = "^(?=.*[@#$%&*!]).{8,}$"; 
-        return password.matches(passwordPattern);
-    }
-
-    public static boolean isValidEmail(String email) {
-        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-        return email.matches(emailPattern);
-    }
+    
 }
