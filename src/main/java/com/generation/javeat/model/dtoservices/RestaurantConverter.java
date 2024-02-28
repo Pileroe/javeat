@@ -1,10 +1,12 @@
 package com.generation.javeat.model.dtoservices;
 import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoBase;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
-import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 
@@ -28,10 +30,10 @@ public class RestaurantConverter
     }
 
 
-    public RestaurantDtoWNoDellivery restaurantDtoWNoDellivery(Restaurant r)
+    public RestaurantDtoWNoDelivery restaurantDtoWNoDellivery(Restaurant r)
     {
         boolean isOpen =isOpen(r);
-        return RestaurantDtoWNoDellivery
+        return RestaurantDtoWNoDelivery
                 .builder()
                 .name(r.getName())
                 .foodTypes(r.getFoodTypes())
