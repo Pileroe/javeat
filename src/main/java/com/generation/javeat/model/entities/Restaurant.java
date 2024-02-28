@@ -1,11 +1,8 @@
 package com.generation.javeat.model.entities;
-
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -20,16 +17,19 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Restaurant {
+public class Restaurant 
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,3 +54,4 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<Delivery> deliveries; // da rivedere il nome
 }
+     

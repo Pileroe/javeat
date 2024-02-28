@@ -12,10 +12,13 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,5 +42,16 @@ public class DishToDelivery
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_id") 
     private Delivery delivery; 
+
+
+    public double getPrice()
+    {
+        if(dish!=null)
+            return (dish.getPrice()*quantity)+delivery.getRestaurant().getDeliveryPricePerUnit();
+        else
+            return 0; 
+    }
+
+
 
 }
