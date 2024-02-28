@@ -16,8 +16,11 @@ import com.generation.javeat.model.repositories.UserRepository;
 
 import static  com.generation.javeat.utils.Utils.*;
 
+import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -66,13 +69,22 @@ public class DeliveryConverter
     {
         Set<DishToDelivery> newSet = new HashSet<DishToDelivery>();
 
+        Map<Integer, Integer> we = new HashMap<Integer, Integer>();
+
         for(Integer n : num)
         {
-            // newSet.add(repoD.findById(n).get());
+            if(we.containsKey(n)){
+
+                we.put(n, we.get(n)+1);
+            }else
+            {
+                we.put(n,1);
+            }
         }
+
+        Set<Integer> wo = new HashSet<Integer>(num);
+
 
         return newSet;
     }
-
-   
 }
