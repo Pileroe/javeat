@@ -13,12 +13,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,17 +50,37 @@ public class Delivery {
     @JsonIgnore
     @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER)
     private Set<DishToDelivery> dishesDeliveries;
-/* 
+
+
+
     public double getDishesPrice()
     {
+        double totDishesPrice=0;
 
+        for(DishToDelivery d: dishesDeliveries)
+            totDishesPrice+=d.getPrice(); 
+        
+        return totDishesPrice; 
     }
-    private double getRiderRevenue()
+
+    public double getRiderRevenue()
+    {
+        double totalRevenue = 0.0;
+        for (DishToDelivery dishDelivery : dishesDeliveries) 
+                totalRevenue += dishDelivery.getPrice();
+        
+        
+        double distanceCost= restaurant.getDeliveryPricePerUnit() * distance;
+
+        return totalRevenue-distanceCost;
+    }
+
+
+
+    public double getTotalPrice()
     {
 
+        return getDishesPrice()+getRiderRevenue(); 
     }
-    private double getTotalPrice()
-    {
-
-    }*/
 }
+
