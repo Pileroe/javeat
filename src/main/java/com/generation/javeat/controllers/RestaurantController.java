@@ -3,10 +3,12 @@ import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.generation.javeat.model.dto.restaurant.FilteredRestaurantRqst;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
 import com.generation.javeat.model.dtoservices.RestaurantConverter;
 import com.generation.javeat.model.entities.Restaurant;
@@ -29,6 +31,11 @@ public class RestaurantController {
     public List<RestaurantDtoWNoDellivery> allrestaurants() {
 
         return rRepo.findAll().stream().map(e -> RConv.restaurantDtoWNoDellivery(e)).toList();
+    }
+
+    @GetMapping("/restaurants/{id}")
+    public RestaurantDtoWMenu detailrestaurants(@PathVariable Integer id) {
+        return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
     }
 
     @PostMapping("/restaurants")
