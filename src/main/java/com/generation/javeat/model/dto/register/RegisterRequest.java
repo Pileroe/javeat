@@ -9,7 +9,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RegisterRequest {
+public class RegisterRequest 
+{
     private String mail,password,phone;
     private Integer  positionX, positionY;
 }
