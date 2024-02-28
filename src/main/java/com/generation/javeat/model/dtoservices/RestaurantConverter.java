@@ -66,7 +66,6 @@ public class RestaurantConverter
 
     public boolean isOpen(Restaurant r) 
         {
-       
             LocalTime currentTime = LocalTime.now();
                     
             if (r.getOpeningHour()==null|| r.getClosingHour() == null) 
@@ -76,7 +75,7 @@ public class RestaurantConverter
                 return currentTime.isAfter(LocalTime.of(r.getOpeningHour(), 0)) || currentTime.isBefore(LocalTime.of(r.getClosingHour(), 0));
            else 
                 return currentTime.isAfter(LocalTime.of(r.getOpeningHour(), 0)) && currentTime.isBefore(LocalTime.of(r.getClosingHour(), 0));
-            
+
         }
 }
 
