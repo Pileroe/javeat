@@ -57,7 +57,7 @@ public class UserController {
     }
 
     private boolean isValidPassword(String password) {
-        String passwordPattern = "^(?=.[@#$%&*!]).{8,}$";
+        String passwordPattern = "^(?=.*[@#$%&*!]).{8,}$"; 
         return password.matches(passwordPattern);
     }
 
