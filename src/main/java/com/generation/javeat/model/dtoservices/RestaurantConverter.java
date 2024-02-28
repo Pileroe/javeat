@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoBase;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.RestaurantRepository;
@@ -42,4 +43,22 @@ public class RestaurantConverter
                 .build();
     }
 
+    public RestaurantDtoWMenu restaurantDtoWMenu(Restaurant r)
+    {
+        return RestaurantDtoWMenu
+                .builder()
+                .name(r.getName())
+                .foodTypes(r.getFoodTypes())
+                .positionX(r.getPositionX())
+                .positionY(r.getPositionY())
+                .deliveryPricePerUnit(r.getDeliveryPricePerUnit())
+                .imgUrl(r.getImgUrl())
+                .id(r.getId())
+                .phone(r.getPhone())
+                .openingHour(r.getOpeningHour())
+                .closingHour(r.getClosingHour())
+                .maxDeliveryDistance(r.getMaxDeliveryDistance())
+                .menuWithDish(r.getMenu())
+                .build();
+    }
 }

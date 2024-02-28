@@ -1,4 +1,5 @@
 package com.generation.javeat.model.dto.restaurant;
+
 import com.generation.javeat.model.entities.Menu;
 
 import lombok.AllArgsConstructor;
@@ -10,11 +11,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RestaurantDtoWNoDellivery extends RestaurantDtoBase
+public class RestaurantDtoWMenu extends RestaurantDtoWNoDellivery
 {
-   private Integer id; 
-  
-
-    
-
+    private String phone; 
+    private int openingHour, closingHour, maxDeliveryDistance;
+    private Menu menuWithDish;
 }
