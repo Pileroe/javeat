@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class FilteredRestaurantRqst {
     private List<String> foodTypes;
-    private int positionX; 
-    private int positionY; 
+    private Integer positionX; 
+    private Integer positionY; 
+    private Integer distance;
 }
