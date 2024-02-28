@@ -1,4 +1,7 @@
-package com.generation.javeat.model.dto.register;
+package com.generation.javeat.model.dto.dish;
+
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +11,10 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RegisterRequest 
+public class DishDtoW extends DishDtoBase
 {
-    private String mail,password,phone;
-    private Integer  positionX, positionY;
+    private Integer id; 
+    private List<String> ingredients;
+
+
 }

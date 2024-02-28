@@ -1,10 +1,14 @@
 package com.generation.javeat.model.dtoservices;
 import java.time.LocalTime;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoBase;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
-import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
+import com.generation.javeat.model.entities.Dish;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 
@@ -13,6 +17,9 @@ public class RestaurantConverter
 {
     @Autowired
     RestaurantRepository rRepo; 
+
+    @Autowired
+    DishConverter dConv;
 
 
     public RestaurantDtoBase restaurantDtoBase(Restaurant r)
@@ -28,10 +35,10 @@ public class RestaurantConverter
     }
 
 
-    public RestaurantDtoWNoDellivery restaurantDtoWNoDellivery(Restaurant r)
+    public RestaurantDtoWNoDelivery restaurantDtoWNoDellivery(Restaurant r)
     {
         boolean isOpen =isOpen(r);
-        return RestaurantDtoWNoDellivery
+        return RestaurantDtoWNoDelivery
                 .builder()
                 .name(r.getName())
                 .foodTypes(r.getFoodTypes())
@@ -40,7 +47,6 @@ public class RestaurantConverter
                 .imgUrl(r.getImgUrl())
                 .isOpen(isOpen)
                 .id(r.getId())
-                
                 .build();
     }
 
@@ -58,9 +64,10 @@ public class RestaurantConverter
                 .openingHour(r.getOpeningHour())
                 .closingHour(r.getClosingHour())
                 .maxDeliveryDistance(r.getMaxDeliveryDistance())
-                .menuWithDish(r.getMenu())
+                .menu(rRepo.findById(r.getId()).get().getMenu().getDishes().stream().map(d-> dConv.dishDtoW(d)).toList())
                 .build();
     }
+
 
     public boolean isOpen(Restaurant r) 
         {
@@ -75,6 +82,12 @@ public class RestaurantConverter
                 return currentTime.isAfter(LocalTime.of(r.getOpeningHour(), 0)) && currentTime.isBefore(LocalTime.of(r.getClosingHour(), 0));
 
         }
+
+
+    
+    
+
+   
 }
 
       
