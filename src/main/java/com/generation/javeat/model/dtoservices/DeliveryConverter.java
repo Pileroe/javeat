@@ -4,19 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
-import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
-import com.generation.javeat.model.dto.user.UserDtoR;
 import com.generation.javeat.model.entities.Delivery;
+import com.generation.javeat.model.entities.Dish;
+import com.generation.javeat.model.entities.DishToDelivery;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.DeliveryRepository;
+import com.generation.javeat.model.repositories.DishRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 
 import static  com.generation.javeat.utils.Utils.*;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+
 
 @Service
 public class DeliveryConverter 
@@ -26,6 +30,9 @@ public class DeliveryConverter
 
     @Autowired
     RestaurantRepository rRepo;
+
+    @Autowired
+    DishRepository repoD;
 
     @Autowired
     UserRepository uRepo;
@@ -50,20 +57,22 @@ public class DeliveryConverter
                 .notes(del.getNotes())
                 .user(user)
                 .restaurant(restaurant)
+                .dishesDeliveries(null)
                 .build();
 
     }
 
-    public User dtoRToUser(UserDtoR dto) {
+    public Set<DishToDelivery> dishesByIds(List<Integer> num)
+    {
+        Set<DishToDelivery> newSet = new HashSet<DishToDelivery>();
 
-        return User
-                .builder()
-                .mail(dto.getMail())
-                .password(dto.getPassword())
-                .phone(dto.getPhone())
-                .positionX(dto.getPositionX())
-                .positionY(dto.getPositionY())
-                .build();
+        for(Integer n : num)
+        {
+            // newSet.add(repoD.findById(n).get());
+        }
+
+        return newSet;
     }
 
+   
 }
