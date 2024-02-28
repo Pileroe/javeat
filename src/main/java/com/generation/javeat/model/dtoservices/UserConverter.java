@@ -1,6 +1,7 @@
 package com.generation.javeat.model.dtoservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoBase;
@@ -9,6 +10,7 @@ import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.UserRepository;
 
+@Service
 public class UserConverter 
 {
     @Autowired
