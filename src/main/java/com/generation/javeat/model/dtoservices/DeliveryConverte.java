@@ -1,11 +1,7 @@
 package com.generation.javeat.model.dtoservices;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.generation.javeat.model.dto.delivery.DelveryInstRqstDto;
-import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDellivery;
-import com.generation.javeat.model.dto.user.UserDtoR;
 import com.generation.javeat.model.entities.Delivery;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
@@ -14,9 +10,6 @@ import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 
 import static  com.generation.javeat.utils.Utils.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class DeliveryConverte 
@@ -29,13 +22,6 @@ public class DeliveryConverte
 
     @Autowired
     UserRepository uRepo;
-
-    // private Integer idRestaurant;
-    // private Integer idUser;
-    // private LocalDateTime expected_arrival;
-    // private String paymentMethod;
-    // private String notes;
-    // private List<Integer> dishesId;
 
     public Delivery deliveryDtoRqstDelivery(DelveryInstRqstDto del)
     {
@@ -53,17 +39,4 @@ public class DeliveryConverte
                 .build();
 
     }
-
-    public User dtoRToUser(UserDtoR dto) {
-
-        return User
-                .builder()
-                .mail(dto.getMail())
-                .password(dto.getPassword())
-                .phone(dto.getPhone())
-                .positionX(dto.getPositionX())
-                .positionY(dto.getPositionY())
-                .build();
-    }
-
 }
