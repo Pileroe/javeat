@@ -1,6 +1,7 @@
 package com.generation.javeat.model.dto.delivery;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,5 @@ public class DeliveryInstRqstDto
     private LocalDateTime expected_arrival;
     private String paymentMethod;
     private String notes;
-    private List<Integer> dishesId;
+    private Map<Integer, Integer> dishes;
 }
