@@ -42,7 +42,7 @@ public class RestaurantController {
     @PostMapping("/restaurants")
     public List<RestaurantDtoWNoDelivery> restaurant(@RequestBody FilteredRestaurantRqst dto) {
         List<Restaurant> filtratiDistanza = rRepo.findAll().stream()
-                .filter(f -> calculateDistanceToRestaurant(f, dto.getPositionX(), dto.getPositionY()) < dto
+                .filter(f -> calculateDistanceToRestaurant(f, dto.getPositionX(), dto.getPositionY()) <= dto
                         .getDistance())
                 .toList();
 
