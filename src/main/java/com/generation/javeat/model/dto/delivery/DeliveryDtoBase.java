@@ -1,6 +1,7 @@
 package com.generation.javeat.model.dto.delivery;
 
 import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
