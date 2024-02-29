@@ -1,6 +1,5 @@
 package com.generation.javeat.model.dto.delivery;
 import java.util.List;
-import java.util.Map;
 
 import com.generation.javeat.model.entities.DishToDelivery;
 
@@ -17,6 +16,6 @@ public class DeliveryDtoWithDelivery
 {
     private Integer idRestaurant;
     private Integer idUser;
-    private DishToDelivery dishToDelivery;
+    private List<DishToDelivery> dishToDelivery;
 
 }

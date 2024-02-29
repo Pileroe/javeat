@@ -34,12 +34,12 @@ public class DeliveryController
         return repo.findById(id).get();
     }
 
-    @GetMapping("/")
-    public List<DeliveryDtoWithDelivery> getAll()
-    {
-        // return rRepo.findAll().stream().map(e -> RConv.restaurantDtoWNoDellivery(e)).toList();
-        return repo.findAll().stream().map(d-> conv.deliveryDtoWithDelivery(d)).toList();
-    }
+    // @GetMapping("/")
+    // public List<DeliveryDtoWithDelivery> getAll()
+    // {
+    //     // return rRepo.findAll().stream().map(e -> RConv.restaurantDtoWNoDellivery(e)).toList();
+    //     return repo.findAll().stream().map(d-> conv.deliveryDtoWithDelivery(d)).toList();
+    // }
 
 
     //Metodo per post Delivery
