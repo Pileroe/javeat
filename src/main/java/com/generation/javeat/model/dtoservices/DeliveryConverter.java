@@ -62,17 +62,5 @@ public class DeliveryConverter
 
     }
 
-    public Set<DishToDelivery> dishesByIds(List<Integer> num)
-    {
-        Set<DishToDelivery> newSet = new HashSet<DishToDelivery>();
-
-        for(Integer n : num)
-        {
-            // newSet.add(repoD.findById(n).get());
-        }
-
-        return newSet;
-    }
-
    
 }
