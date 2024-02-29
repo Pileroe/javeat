@@ -2,6 +2,8 @@ package com.generation.javeat.model.dtoservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.generation.javeat.model.dto.delivery.DeliveryDtoWithDelivery;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
 import com.generation.javeat.model.entities.Delivery;
 import com.generation.javeat.model.entities.DishToDelivery;
@@ -25,6 +27,9 @@ public class DeliveryConverter
 {
     @Autowired
     DeliveryRepository dRepo;
+
+    @Autowired
+    DishToDelivery ddRepo; 
 
     @Autowired
     RestaurantRepository rRepo;
@@ -63,6 +68,21 @@ public class DeliveryConverter
 
     }
 
+    public Delivery deliveryDtoWithDelivery(DeliveryDtoWithDelivery dto)
+    {
+        User user = uRepo.findById(dto.getIdUser()).get();
+        Restaurant restaurant = rRepo.findById(dto.getIdRestaurant()).get();
+        
+        
+        return Delivery
+                .builder()
+                .restaurant(restaurant)
+                .user(user)
+                .dishesDeliveries(dto.getDishToDelivery())
+                .build();
+
+    }
+
     public Set<DishToDelivery> dishesByIds(Map<Integer, Integer> dishes)
     { 
         Set<DishToDelivery> newSet = new HashSet<DishToDelivery>();
@@ -76,4 +96,6 @@ public class DeliveryConverter
         }    
         return newSet;
     }
+
+    
 }
