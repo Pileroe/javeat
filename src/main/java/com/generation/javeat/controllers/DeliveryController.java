@@ -1,8 +1,6 @@
 package com.generation.javeat.controllers;
-
+import java.util.List;
 import java.util.Optional;
-
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
 import com.generation.javeat.model.dtoservices.DeliveryConverter;
 import com.generation.javeat.model.entities.Delivery;
@@ -30,6 +29,12 @@ public class DeliveryController
     public Delivery getOne(@PathVariable Integer id)
     {
         return repo.findById(id).get();
+    }
+
+    @GetMapping("/myorders/{id}")
+    public List<DeliveryDtoResponse> getAll(@PathVariable Integer id)
+    {
+       return repo.findAll().stream().filter(e->e.getUser().getId()==id).map((f-> conv.deliveryDtoResponse(f))).toList();
     }
 
 
