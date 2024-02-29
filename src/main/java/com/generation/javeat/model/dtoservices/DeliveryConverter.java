@@ -3,7 +3,7 @@ package com.generation.javeat.model.dtoservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.generation.javeat.model.dto.delivery.DeliveryDtoWithDelivery;
+import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
 import com.generation.javeat.model.entities.Delivery;
 import com.generation.javeat.model.entities.DishToDelivery;
@@ -28,8 +28,6 @@ public class DeliveryConverter
     @Autowired
     DeliveryRepository dRepo;
 
-    @Autowired
-    DishToDelivery ddRepo; 
 
     @Autowired
     RestaurantRepository rRepo;
@@ -39,6 +37,9 @@ public class DeliveryConverter
 
     @Autowired
     UserRepository uRepo;
+
+    @Autowired
+    DishConverter conv; 
 
     // private Integer idRestaurant;
     // private Integer idUser;
@@ -68,20 +69,20 @@ public class DeliveryConverter
 
     }
 
-    public Delivery deliveryDtoWithDelivery(DeliveryDtoWithDelivery dto)
+    public DeliveryDtoResponse deliveryDtoResponse(Delivery d)
     {
-        User user = uRepo.findById(dto.getIdUser()).get();
-        Restaurant restaurant = rRepo.findById(dto.getIdRestaurant()).get();
-        
-        
-        return Delivery
+        return DeliveryDtoResponse
                 .builder()
-                .restaurant(restaurant)
-                .user(user)
-                .dishesDeliveries(dto.getDishToDelivery())
+                .paymentMethod(d.getPaymentMethod())
+                .notes(d.getNotes())
+                .expectedArrival(d.getExpected_arrival())
+                .dishes(d.getDishesDeliveries().stream().map(e-> conv.dishDtoBase(e)).toList())
+                .dishesPrice(d.getDishesPrice())
+                .riderRevenue(d.getRiderRevenue())
+                .totalPrice(d.getTotalPrice())
                 .build();
-
     }
+
 
     public Set<DishToDelivery> dishesByIds(Map<Integer, Integer> dishes)
     { 

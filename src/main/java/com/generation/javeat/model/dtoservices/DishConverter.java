@@ -3,8 +3,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.generation.javeat.model.dto.dish.DishDtoBase;
 import com.generation.javeat.model.dto.dish.DishDtoW;
 import com.generation.javeat.model.entities.Dish;
+import com.generation.javeat.model.entities.DishToDelivery;
 import com.generation.javeat.model.entities.Menu;
 import com.generation.javeat.model.repositories.DishRepository;
 
@@ -34,6 +37,16 @@ public class DishConverter
                 .map(d-> dishDtoW(d))
                 .collect(Collectors.toList());
 
+    }
+
+    public DishDtoBase dishDtoBase(DishToDelivery d)
+    {
+        return DishDtoBase
+                .builder()
+                .name(d.getDish().getName())
+                .category(d.getDish().getCategory())
+                .price(d.getDish().getPrice())
+                .build();
     }
 
     // public DishToDelivery disheToDto(Dish menu) 
