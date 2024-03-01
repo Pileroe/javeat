@@ -36,6 +36,10 @@ public class Restaurant
     private String phone, imgUrl, name;
     private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
     private double deliveryPricePerUnit;
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.EAGER)
+    private Owner owner; 
     
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
