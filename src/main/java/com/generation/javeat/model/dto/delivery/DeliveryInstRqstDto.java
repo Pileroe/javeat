@@ -15,7 +15,7 @@ public class DeliveryInstRqstDto
 {
     private Integer idRestaurant;
     private Integer idUser;
-    private LocalDateTime expected_arrival;
+    private String expected_arrival;
     private String paymentMethod;
     private String notes;
     private Map<Integer, Integer> dishes;

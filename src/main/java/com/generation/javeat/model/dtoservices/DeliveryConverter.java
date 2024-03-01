@@ -14,6 +14,9 @@ import com.generation.javeat.model.repositories.DishRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static  com.generation.javeat.utils.Utils.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -53,9 +56,11 @@ public class DeliveryConverter
         User user = uRepo.findById(del.getIdUser()).get();
         Restaurant restaurant = rRepo.findById(del.getIdRestaurant()).get();
 
+        String[] parts = del.getExpected_arrival().toString().split(":");
+
         Delivery newDelivery = Delivery
                 .builder()
-                .expected_arrival(del.getExpected_arrival())
+                .expected_arrival(LocalDateTime.now().withHour(Integer.parseInt(parts[0])).withMinute(Integer.parseInt(parts[1])))
                 .distance(calculateDistanceToRestaurant(restaurant,user.getPositionX(),user.getPositionY()))
                 .paymentMethod(del.getPaymentMethod())
                 .notes(del.getNotes())
