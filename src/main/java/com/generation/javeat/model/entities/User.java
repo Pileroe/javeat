@@ -1,6 +1,8 @@
 package com.generation.javeat.model.entities;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +21,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class User {
+@DiscriminatorValue("user")
+public class User 
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -23,7 +23,8 @@ public class UserController {
     UserConverter conv;
 
     @PostMapping("/user/login")
-    public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) 
+    {
 
         String mail = request.getMail();
         String password = request.getPassword();
