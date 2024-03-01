@@ -9,6 +9,7 @@ import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.DeliveryRepository;
 import com.generation.javeat.model.repositories.DishRepository;
+import com.generation.javeat.model.repositories.DishToDeliveryRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static  com.generation.javeat.utils.Utils.*;
@@ -37,6 +38,9 @@ public class DeliveryConverter
 
     @Autowired
     DishConverter conv; 
+
+    @Autowired
+    DishToDeliveryRepository DTRepo; 
 
     // private Integer idRestaurant;
     // private Integer idUser;
@@ -72,10 +76,11 @@ public class DeliveryConverter
     {
         return DeliveryDtoResponse
                 .builder()
+                .orderId(d.getId())
                 .paymentMethod(d.getPaymentMethod())
                 .notes(d.getNotes())
                 .expectedArrival(d.getExpected_arrival())
-                .dishes(d.getDishesDeliveries().stream().map(e-> conv.dishDtoBase(e)).toList())
+                .dishes(d.getDishesDeliveries().stream().toList())
                 .dishesPrice(d.getDishesPrice())
                 .riderRevenue(d.getRiderRevenue())
                 .totalPrice(d.getTotalPrice())
@@ -93,9 +98,9 @@ public class DeliveryConverter
             dtd.setDish(repoD.findById(key).get());
             dtd.setQuantity(dishes.get(key));
             newSet.add(dtd);
+            DTRepo.save(dtd);
+        
         }    
         return newSet;
     }
 }
-
-//ciao

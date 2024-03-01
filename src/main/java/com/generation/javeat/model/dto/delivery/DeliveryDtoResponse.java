@@ -1,8 +1,8 @@
 package com.generation.javeat.model.dto.delivery;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.generation.javeat.model.dto.dish.DishDtoBase;
+import com.generation.javeat.model.dtoservices.DeliveryConverter;
+import com.generation.javeat.model.entities.DishToDelivery;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,16 +17,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class DeliveryDtoResponse 
 {
+    private Integer orderId;
     private String paymentMethod;
     private String notes;
     private LocalDateTime expectedArrival; 
     private double riderRevenue;
     private double dishesPrice;
     private double totalPrice; 
-    private List<DishDtoBase> dishes;
-
-  
- 
-
-    
+    private List<DishToDelivery> dishes;
 }
