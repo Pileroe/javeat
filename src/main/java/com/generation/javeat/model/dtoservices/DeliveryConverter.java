@@ -82,7 +82,7 @@ public class DeliveryConverter
                 .paymentMethod(d.getPaymentMethod())
                 .notes(d.getNotes())
                 .expectedArrival(d.getExpected_arrival())
-                .dishes(d.getDishesDeliveries().stream().map(e-> conv.dishDtoBase(e)).toList())
+                .dishes(d.getDishesDeliveries().stream().toList())
                 .dishesPrice(d.getDishesPrice())
                 .riderRevenue(d.getRiderRevenue())
                 .totalPrice(d.getTotalPrice())
