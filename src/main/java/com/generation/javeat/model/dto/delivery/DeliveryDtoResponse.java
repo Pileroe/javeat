@@ -17,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class DeliveryDtoResponse 
 {
+    private Integer orderId;
     private String paymentMethod;
     private String notes;
     private LocalDateTime expectedArrival; 
@@ -24,9 +25,4 @@ public class DeliveryDtoResponse
     private double dishesPrice;
     private double totalPrice; 
     private List<DishDtoBase> dishes;
-
-  
- 
-
-    
 }

@@ -11,15 +11,12 @@ import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.DeliveryRepository;
 import com.generation.javeat.model.repositories.DishRepository;
+import com.generation.javeat.model.repositories.DishToDeliveryRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static  com.generation.javeat.utils.Utils.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +40,9 @@ public class DeliveryConverter
 
     @Autowired
     DishConverter conv; 
+
+    @Autowired
+    DishToDeliveryRepository DTRepo; 
 
     // private Integer idRestaurant;
     // private Integer idUser;
@@ -78,6 +78,7 @@ public class DeliveryConverter
     {
         return DeliveryDtoResponse
                 .builder()
+                .orderId(d.getId())
                 .paymentMethod(d.getPaymentMethod())
                 .notes(d.getNotes())
                 .expectedArrival(d.getExpected_arrival())
@@ -99,9 +100,9 @@ public class DeliveryConverter
             dtd.setDish(repoD.findById(key).get());
             dtd.setQuantity(dishes.get(key));
             newSet.add(dtd);
+            DTRepo.save(dtd);
+        
         }    
         return newSet;
     }
 }
-
-//ciao
