@@ -1,8 +1,6 @@
 package com.generation.javeat.model.dtoservices;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
 import com.generation.javeat.model.entities.Delivery;
@@ -14,12 +12,8 @@ import com.generation.javeat.model.repositories.DishRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static  com.generation.javeat.utils.Utils.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
