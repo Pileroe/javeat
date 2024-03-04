@@ -3,7 +3,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
+import com.generation.javeat.model.dto.deliveryStat.DeliverySummaryByWeekDto;
 import com.generation.javeat.model.entities.Delivery;
+import com.generation.javeat.model.entities.Dish;
 import com.generation.javeat.model.entities.DishToDelivery;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
@@ -14,9 +16,15 @@ import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static  com.generation.javeat.utils.Utils.*;
 import java.time.LocalDateTime;
+import java.time.temporal.IsoFields;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 
@@ -102,5 +110,29 @@ public class DeliveryConverter
         
         }    
         return newSet;
+    }
+
+    public List<DeliverySummaryByWeekDto> convertToOrderSummaryByWeek(List<Delivery> deliveries) {
+        Map<Integer, DeliverySummaryByWeekDto> summaryByWeek = new HashMap<>();
+
+        for (Delivery delivery : deliveries) {
+            int weekOfYear = delivery.getExpected_arrival().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+
+            DeliverySummaryByWeekDto weeklySummary = summaryByWeek.computeIfAbsent(weekOfYear, k -> new DeliverySummaryByWeekDto());
+            weeklySummary.setWeekOfYear("Week: " + weekOfYear);
+            weeklySummary.setTotalEarnings(weeklySummary.getTotalEarnings() + delivery.getTotalPrice());
+
+            for (DishToDelivery dishToDelivery : delivery.getDishesDeliveries()) {
+                Dish dish = dishToDelivery.getDish();
+                if (dish != null) {
+                    weeklySummary.getDishesOrdered().merge(dish.getName(), dishToDelivery.getQuantity(), Integer::sum);
+                }
+            }
+        }
+
+        return new ArrayList<>(summaryByWeek.values())
+            .stream()
+            .sorted(Comparator.comparing(DeliverySummaryByWeekDto::getWeekOfYear))
+            .collect(Collectors.toList());
     }
 }
