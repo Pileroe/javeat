@@ -11,7 +11,10 @@ import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.dtoservices.UserConverter;
 import com.generation.javeat.model.entities.Owner;
+import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
+import com.generation.javeat.model.repositories.OwnerRepository;
+import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 import static com.generation.javeat.utils.Utils.*;
 
@@ -22,7 +25,13 @@ public class UserController {
     UserRepository repo;
 
     @Autowired
+    OwnerRepository oRepo;
+
+    @Autowired
     UserConverter conv;
+
+    @Autowired
+    RestaurantRepository rRepo;
 
     @PostMapping("/user/login")
     public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) {
@@ -47,20 +56,43 @@ public class UserController {
 
     @PostMapping("/user/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest dto) {
-        User q = conv.RegisterToUser(dto);
 
+        if(dto.isOwner())
+        {
+            Owner o = conv.RegisterToOwner(dto);
+            Restaurant r = new Restaurant();
+                rRepo.save(r);
+                o.setRestaurant(r);
+            if (!isValidPassword(o.getPassword())) {
+                return ResponseEntity.badRequest().body(
+                        "La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
+            }
+    
+            if (!isValidEmail(o.getMail())) {
+                return ResponseEntity.badRequest().body("La email non è valida");
+            }
+    
+            return ResponseEntity.ok(oRepo.save(o));
+        }
+        else
+        {
+             User q = conv.RegisterToUser(dto);
+                if (!isValidPassword(q.getPassword())) {
+                    return ResponseEntity.badRequest().body(
+                            "La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
+                }
         
-        // Verifica complessiva della password usando un'espressione regolare
-        if (!isValidPassword(q.getPassword())) {
-            return ResponseEntity.badRequest().body(
-                    "La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
+                if (!isValidEmail(q.getMail())) {
+                    return ResponseEntity.badRequest().body("La email non è valida");
+                }
+        
+                return ResponseEntity.ok(repo.save(q));
         }
 
-        if (!isValidEmail(q.getMail())) {
-            return ResponseEntity.badRequest().body("La email non è valida");
-        }
-
-        return ResponseEntity.ok(repo.save(q));
     }
+
+    
+
+    
 
 }

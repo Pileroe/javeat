@@ -5,6 +5,7 @@ import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoBase;
 import com.generation.javeat.model.dto.user.UserDtoR;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
+import com.generation.javeat.model.entities.Owner;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.UserRepository;
 
@@ -48,13 +49,24 @@ public class UserConverter
                 .phone(u.getPhone())
                 .positionX(u.getPositionX())
                 .positionY(u.getPositionY())
-                .isOwner(false)
                 .build();
     }
 
     public User RegisterToUser(RegisterRequest dto) {
 
         return User
+                .builder()
+                .mail(dto.getMail())
+                .password(dto.getPassword())
+                .phone(dto.getPhone())
+                .positionX(dto.getPositionX())
+                .positionY(dto.getPositionY())
+                .build();
+    }
+
+    public Owner RegisterToOwner(RegisterRequest dto) {
+
+        return Owner
                 .builder()
                 .mail(dto.getMail())
                 .password(dto.getPassword())
