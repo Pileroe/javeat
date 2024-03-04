@@ -1,4 +1,6 @@
 package com.generation.javeat.model.dto.register;
+import com.generation.javeat.model.entities.Restaurant;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +14,6 @@ public class RegisterRequest
 {
     private String mail,password,phone;
     private Integer  positionX, positionY;
+    private boolean owner;
+    
 }
