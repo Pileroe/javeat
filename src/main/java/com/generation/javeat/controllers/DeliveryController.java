@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
+import com.generation.javeat.model.dto.deliveryStat.DeliverySummaryByWeekDto;
 import com.generation.javeat.model.dtoservices.DeliveryConverter;
 import com.generation.javeat.model.entities.Delivery;
 import com.generation.javeat.model.entities.DishToDelivery;
@@ -42,6 +43,12 @@ public class DeliveryController
        return repo.findAll().stream().filter(e->e.getUser().getId()==id).map((f-> conv.deliveryDtoResponse(f))).toList();
     }
 
+    @GetMapping("/myorders/statistic/{id}")
+    public List<DeliverySummaryByWeekDto> getOrdersByWeekStatistic(@PathVariable Integer id)
+    {
+        List<Delivery> deliveries = repo.findAll(); // O qualsiasi metodo di filtro necessario
+        return conv.convertToOrderSummaryByWeek(deliveries);
+    }
 
     //Metodo per post Delivery
     @PostMapping("/deliveries")
