@@ -44,6 +44,7 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest dto) {
         User q = conv.RegisterToUser(dto);
 
+        
         // Verifica complessiva della password usando un'espressione regolare
         if (!isValidPassword(q.getPassword())) {
             return ResponseEntity.badRequest().body("La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");

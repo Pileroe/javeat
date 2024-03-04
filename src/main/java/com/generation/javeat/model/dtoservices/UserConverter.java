@@ -48,6 +48,7 @@ public class UserConverter
                 .phone(u.getPhone())
                 .positionX(u.getPositionX())
                 .positionY(u.getPositionY())
+                .isOwner(false)
                 .build();
     }
 

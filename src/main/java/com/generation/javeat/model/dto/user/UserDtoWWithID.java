@@ -11,4 +11,5 @@ import lombok.experimental.SuperBuilder;
 public class UserDtoWWithID extends UserDtoBase
 {
     private Integer id;
+    private boolean isOwner;
 }
