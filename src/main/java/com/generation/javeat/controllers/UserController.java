@@ -1,4 +1,5 @@
 package com.generation.javeat.controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +10,10 @@ import com.generation.javeat.model.dto.login.LoginRequest;
 import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.dtoservices.UserConverter;
+import com.generation.javeat.model.entities.Owner;
 import com.generation.javeat.model.entities.User;
 import com.generation.javeat.model.repositories.UserRepository;
-import static  com.generation.javeat.utils.Utils.*;
+import static com.generation.javeat.utils.Utils.*;
 
 @RestController
 public class UserController {
@@ -23,8 +25,7 @@ public class UserController {
     UserConverter conv;
 
     @PostMapping("/user/login")
-    public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) 
-    {
+    public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) {
 
         String mail = request.getMail();
         String password = request.getPassword();
@@ -33,6 +34,10 @@ public class UserController {
 
         if (user != null && user.getPassword().equals(password)) {
             UserDtoWWithID userDto = conv.userToDtoWID(user);
+
+            boolean isOwner = user instanceof Owner && ((Owner) user).getRestaurant() != null;
+
+            userDto.setOwner(isOwner);
 
             return ResponseEntity.ok(userDto);
         } else {
@@ -47,7 +52,8 @@ public class UserController {
         
         // Verifica complessiva della password usando un'espressione regolare
         if (!isValidPassword(q.getPassword())) {
-            return ResponseEntity.badRequest().body("La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
+            return ResponseEntity.badRequest().body(
+                    "La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");
         }
 
         if (!isValidEmail(q.getMail())) {
@@ -56,5 +62,5 @@ public class UserController {
 
         return ResponseEntity.ok(repo.save(q));
     }
-    
+
 }

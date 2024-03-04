@@ -15,7 +15,9 @@ import com.generation.javeat.model.dto.delivery.DeliveryDtoResponse;
 import com.generation.javeat.model.dto.delivery.DeliveryInstRqstDto;
 import com.generation.javeat.model.dtoservices.DeliveryConverter;
 import com.generation.javeat.model.entities.Delivery;
+import com.generation.javeat.model.entities.DishToDelivery;
 import com.generation.javeat.model.repositories.DeliveryRepository;
+import com.generation.javeat.model.repositories.DishToDeliveryRepository;
 
 @RestController
 public class DeliveryController 
@@ -24,6 +26,8 @@ public class DeliveryController
     DeliveryRepository repo;
     @Autowired
     DeliveryConverter conv;
+    @Autowired
+    DishToDeliveryRepository repoDishToDelivery;
 
 
     @GetMapping("/deliveries/{id}")
@@ -50,18 +54,20 @@ public class DeliveryController
     }
 
     @DeleteMapping("/deliveries/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id)
-    {
-        Optional<Delivery> op= repo.findById(id);
-        if(op.isPresent())
-        {
-            repo.deleteById(id);
-            return new ResponseEntity<String>("", HttpStatus.OK);
+public ResponseEntity<?> delete(@PathVariable Integer id) {
+    Optional<Delivery> op = repo.findById(id);
+    if (op.isPresent()) {
+        Delivery delivery = op.get();
+        for (DishToDelivery dishToDelivery : delivery.getDishesDeliveries()) {
+            dishToDelivery.setDelivery(null);
+            repoDishToDelivery.delete(dishToDelivery);
         }
-        else 
-            return new ResponseEntity<String>("No delivery with id"+id, HttpStatus.NOT_FOUND);
-
-
+        repo.deleteById(id);
+        
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    } else {
+        return new ResponseEntity<String>("No delivery with id " + id, HttpStatus.NOT_FOUND);
     }
+}
     
 }
