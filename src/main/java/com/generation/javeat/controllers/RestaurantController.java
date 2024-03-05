@@ -15,6 +15,8 @@ import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.dtoservices.RestaurantConverter;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.RestaurantRepository;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 public class RestaurantController {
@@ -48,5 +50,12 @@ public class RestaurantController {
                         || !Collections.disjoint(f.getFoodTypes(), dto.getFoodTypes()))
                 .map(e -> RConv.restaurantDtoWNoDellivery(e))
                 .toList();
+    }
+
+    @PutMapping("/restaurants/{id}")
+    public String putRestaurant(@PathVariable String id, @RequestBody String entity) {
+        
+        
+        return entity;
     }
 }
