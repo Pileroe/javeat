@@ -82,7 +82,7 @@ public class DishController
      @PutMapping("/dishes/{id}")
      public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Dish updatedDish) 
      {
-         Optional<Dish> op = dRepo.findById(id);
+         Optional<Dish> op = dRepo.findById(id);//DA MODIFICARE
          if (op.isPresent()) 
          {
              Dish existingDish = op.get();
