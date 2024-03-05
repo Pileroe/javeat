@@ -49,7 +49,7 @@ public class Restaurant
 
     @JsonIgnore
     @ToString.Exclude
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
