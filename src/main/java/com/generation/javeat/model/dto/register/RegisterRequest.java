@@ -1,5 +1,4 @@
 package com.generation.javeat.model.dto.register;
-import com.generation.javeat.model.entities.Restaurant;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
