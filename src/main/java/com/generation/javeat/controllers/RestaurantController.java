@@ -4,12 +4,15 @@ import static com.generation.javeat.utils.Utils.calculateDistanceToRestaurant;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.generation.javeat.model.dto.restaurant.FilteredRestaurantRqst;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoR;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.dtoservices.RestaurantConverter;
@@ -19,7 +22,6 @@ import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 
 import org.springframework.web.bind.annotation.PutMapping;
-
 
 @RestController
 public class RestaurantController {
@@ -59,10 +61,18 @@ public class RestaurantController {
                 .toList();
     }
 
-    @PutMapping("/restaurants/{id}")
-    public String putRestaurant(@PathVariable String id, @RequestBody String entity) {
-        
-        
-        return entity;
+    @RestController
+    public class RistoranteController {
+
+        @PutMapping("/ristoranti")
+        public ResponseEntity<?> aggiornaRistorante(@RequestBody RestaurantDtoR entita) {
+            try {
+                Restaurant r = RConv.putRestaurantFromDto(entita);
+                return new ResponseEntity<Restaurant>(rRepo.save(r), HttpStatus.OK);
+            } catch (Exception e) {
+                // Gestione dell'errore
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
     }
 }

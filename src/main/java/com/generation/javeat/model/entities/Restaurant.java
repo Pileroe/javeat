@@ -35,7 +35,7 @@ public class Restaurant
     private Integer id;
     private String phone, imgUrl, name;
     private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
-    private double deliveryPricePerUnit;
+    private Double deliveryPricePerUnit;
     @JsonIgnore
     @ToString.Exclude
     @OneToOne(fetch = FetchType.EAGER)
