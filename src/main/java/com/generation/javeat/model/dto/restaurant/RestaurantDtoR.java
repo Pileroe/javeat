@@ -6,5 +6,5 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class RestaurantDtoR extends RestaurantDtoBase
 {
-
+    private Integer id;
 }
