@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.generation.javeat.model.dtoservices.DishConverter;
 import com.generation.javeat.model.entities.Dish;
 import com.generation.javeat.model.entities.Menu;
+import com.generation.javeat.model.entities.Owner;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.DishRepository;
 import com.generation.javeat.model.repositories.MenuRepository;
+import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 
 @RestController
@@ -34,6 +36,9 @@ public class DishController
 
     @Autowired
     MenuRepository mRepo;
+
+    @Autowired
+    OwnerRepository oRepo;
 
     @GetMapping("/dishes")
     public List<Dish> getAllDishes()
@@ -60,7 +65,7 @@ public class DishController
     @PostMapping("/dishes/{id}")
     public ResponseEntity<?> insertNewDish(@PathVariable Integer id, @RequestBody Dish dish) 
     {
-        Optional<Restaurant> op = rRepo.findById(id);
+        Optional<Restaurant> op = oRepo.findById(id).map(Owner::getRestaurant);
         if (op.isPresent()) 
         {
             Restaurant restaurant = op.get();
