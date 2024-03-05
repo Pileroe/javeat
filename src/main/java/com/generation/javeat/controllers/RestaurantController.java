@@ -14,7 +14,10 @@ import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.dtoservices.RestaurantConverter;
 import com.generation.javeat.model.entities.Restaurant;
+import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
+import com.generation.javeat.model.repositories.UserRepository;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -27,6 +30,9 @@ public class RestaurantController {
     @Autowired
     RestaurantConverter RConv;
 
+    @Autowired
+    OwnerRepository oRepo;
+
     @GetMapping("/allrestaurants")
     public List<RestaurantDtoWNoDelivery> allrestaurants() {
 
@@ -35,7 +41,8 @@ public class RestaurantController {
 
     @GetMapping("/restaurants/{id}")
     public RestaurantDtoWMenu detailrestaurants(@PathVariable Integer id) {
-        return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
+        // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
+        return RConv.restaurantDtoWMenu(oRepo.findById(id).get().getRestaurant());
     }
 
     @PostMapping("/restaurants")

@@ -49,13 +49,5 @@ public class DishConverter
                 .build();
     }
 
-    // public DishToDelivery disheToDto(Dish menu) 
-    // {
-    //     return menu.getDishes()
-    //             .stream()
-    //             .map(d-> dishDtoW(d))
-    //             .collect(Collectors.toList());
-
-    // }
 
 }
