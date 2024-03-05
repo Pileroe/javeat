@@ -3,6 +3,7 @@ import java.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoBase;
+import com.generation.javeat.model.dto.restaurant.RestaurantDtoR;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWMenu;
 import com.generation.javeat.model.dto.restaurant.RestaurantDtoWNoDelivery;
 import com.generation.javeat.model.entities.Restaurant;
@@ -28,6 +29,25 @@ public class RestaurantConverter
                 .positionY(r.getPositionY())
                 .imgUrl(r.getImgUrl())
                 .build(); 
+    }
+
+
+    public Restaurant putRestaurantFromDto(RestaurantDtoR dto)
+    {
+        return Restaurant
+                .builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .foodTypes(dto.getFoodTypes())
+                .positionX(dto.getPositionX())
+                .positionY(dto.getPositionY())
+                .imgUrl(dto.getImgUrl())
+                .phone(dto.getPhone())
+                .openingHour(dto.getOpeningHour())
+                .closingHour(dto.getClosingHour())
+                .maxDeliveryDistance(dto.getMaxDeliveryDistance())
+                .deliveryPricePerUnit(dto.getDeliveryPricePerUnit())
+                .build();
     }
 
 
