@@ -3,6 +3,8 @@ package com.generation.javeat.controllers;
 import static com.generation.javeat.utils.Utils.calculateDistanceToRestaurant;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,9 @@ public class RestaurantController {
     @GetMapping("/allrestaurants")
     public List<RestaurantDtoWNoDelivery> allrestaurants() {
 
-        return rRepo.findAll().stream().map(e -> RConv.restaurantDtoWNoDellivery(e)).toList();
+        return rRepo.findAll().stream().map(e -> (RestaurantDtoWNoDelivery) RConv.restaurantDtoWNoDelivery(e))
+                .collect(Collectors.toList());
+
     }
 
     @GetMapping("/restaurants/{id}")
@@ -57,8 +61,9 @@ public class RestaurantController {
         return filtratiDistanza.stream()
                 .filter(f -> dto.getFoodTypes().isEmpty()
                         || !Collections.disjoint(f.getFoodTypes(), dto.getFoodTypes()))
-                .map(e -> RConv.restaurantDtoWNoDellivery(e))
-                .toList();
+                .map(e -> (RestaurantDtoWNoDelivery) RConv.restaurantDtoWNoDelivery(e)) // Cast esplicito, se
+                                                                                         // necessario
+                .collect(Collectors.toList()); // Usa questo se `toList()` non è disponibile
     }
 
     @RestController
