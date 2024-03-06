@@ -34,8 +34,8 @@ public class Restaurant
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String phone, imgUrl, name;
-    private Integer openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
-    private Double deliveryPricePerUnit;
+    private int openingHour, closingHour, positionX, positionY, maxDeliveryDistance;
+    private double deliveryPricePerUnit;
     @JsonIgnore
     @ToString.Exclude
     @OneToOne(fetch = FetchType.EAGER)
