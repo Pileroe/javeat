@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.generation.javeat.model.dto.delivery.DishToDeliveryWithNameDto;
 import com.generation.javeat.model.dto.dish.DishDtoBase;
 import com.generation.javeat.model.dto.dish.DishDtoW;
 import com.generation.javeat.model.entities.Dish;
@@ -49,5 +50,15 @@ public class DishConverter
                 .build();
     }
 
+    public DishToDeliveryWithNameDto dishDtoWname(DishToDelivery d)
+    {
+        return DishToDeliveryWithNameDto
+                .builder()
+                .id(d.getId())
+                .name(d.getDish().getName())
+                .price(d.getPrice())
+                .quantity(d.getQuantity())
+                .build();
+    }
 
 }
