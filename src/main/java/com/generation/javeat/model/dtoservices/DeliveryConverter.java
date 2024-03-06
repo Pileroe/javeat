@@ -47,13 +47,6 @@ public class DeliveryConverter {
     @Autowired
     DishToDeliveryRepository DTRepo;
 
-    // private Integer idRestaurant;
-    // private Integer idUser;
-    // private LocalDateTime expected_arrival;
-    // private String paymentMethod;
-    // private String notes;
-    // private List<Integer> dishesId;
-
     public Delivery deliveryDtoRqstDelivery(DeliveryInstRqstDto del) {
         User user = uRepo.findById(del.getIdUser()).get();
         Restaurant restaurant = rRepo.findById(del.getIdRestaurant()).get();
@@ -84,7 +77,7 @@ public class DeliveryConverter {
                 .paymentMethod(d.getPaymentMethod())
                 .notes(d.getNotes())
                 .expectedArrival(d.getExpected_arrival())
-                .dishes(d.getDishesDeliveries().stream().toList())
+                .dishes(d.getDishesDeliveries().stream().map(a-> conv.dishDtoWname(a)).toList())
                 .dishesPrice(d.getDishesPrice())
                 .riderRevenue(d.getRiderRevenue())
                 .totalPrice(d.getTotalPrice())

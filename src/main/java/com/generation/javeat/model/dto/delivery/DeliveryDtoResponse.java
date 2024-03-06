@@ -24,5 +24,5 @@ public class DeliveryDtoResponse
     private double riderRevenue;
     private double dishesPrice;
     private double totalPrice; 
-    private List<DishToDelivery> dishes;
+    private List<DishToDeliveryWithNameDto> dishes;
 }
