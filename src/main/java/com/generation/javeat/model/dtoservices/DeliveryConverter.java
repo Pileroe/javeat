@@ -47,13 +47,6 @@ public class DeliveryConverter {
     @Autowired
     DishToDeliveryRepository DTRepo;
 
-    // private Integer idRestaurant;
-    // private Integer idUser;
-    // private LocalDateTime expected_arrival;
-    // private String paymentMethod;
-    // private String notes;
-    // private List<Integer> dishesId;
-
     public Delivery deliveryDtoRqstDelivery(DeliveryInstRqstDto del) {
         User user = uRepo.findById(del.getIdUser()).get();
         Restaurant restaurant = rRepo.findById(del.getIdRestaurant()).get();
