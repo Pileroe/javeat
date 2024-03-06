@@ -51,6 +51,11 @@ public class RestaurantController {
         return RConv.restaurantDtoWMenu(oRepo.findById(id).get().getRestaurant());
     }
 
+    @GetMapping("/foodtypes")
+    public List<String> foodtypes() {
+        return rRepo.findAll().stream().flatMap(restaurant -> restaurant.getFoodTypes().stream()).distinct().collect(Collectors.toList());
+    }
+
     @GetMapping("/restaurants/{id}")
     public RestaurantDtoWMenu detailrestaurants(@PathVariable Integer id) {
         // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
