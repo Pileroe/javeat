@@ -26,6 +26,7 @@ public class DishConverter
                 .price(d.getPrice())
                 .id(d.getId())
                 .ingredients(d.getIngredients())
+                .imgUrl(d.getImgUrl())
                 .build(); 
 
     }
@@ -46,6 +47,7 @@ public class DishConverter
                 .name(d.getDish().getName())
                 .category(d.getDish().getCategory())
                 .price(d.getDish().getPrice())
+                .imgUrl(d.getDish().getImgUrl())
                 .build();
     }
 
