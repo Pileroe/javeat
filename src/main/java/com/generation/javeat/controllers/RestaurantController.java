@@ -23,6 +23,8 @@ import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
@@ -37,6 +39,7 @@ public class RestaurantController {
     @Autowired
     OwnerRepository oRepo;
 
+    @Operation(description = "Leggo tutti i Ristoranti nel DB")
     @GetMapping("/allrestaurants")
     public List<RestaurantDtoWNoDelivery> allrestaurants() {
 
@@ -45,23 +48,28 @@ public class RestaurantController {
 
     }
 
+    @Operation(description = "Leggo un Ristorante nel DB tramite ID dell' Owner")
     @GetMapping("/restaurantowner/{id}")
     public RestaurantDtoWMenu detailrestaurantowner(@PathVariable Integer id) {
         // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
         return RConv.restaurantDtoWMenu(oRepo.findById(id).get().getRestaurant());
     }
 
+    @Operation(description = "Leggo tutti i FoodTypes dei Ristoranti nel DB")
     @GetMapping("/foodtypes")
     public List<String> foodtypes() {
-        return rRepo.findAll().stream().flatMap(restaurant -> restaurant.getFoodTypes().stream()).distinct().collect(Collectors.toList());
+        return rRepo.findAll().stream().flatMap(restaurant -> restaurant.getFoodTypes().stream()).distinct()
+                .collect(Collectors.toList());
     }
 
+    @Operation(description = "Leggo un Ristorante nel DB tramite ID")
     @GetMapping("/restaurants/{id}")
     public RestaurantDtoWMenu detailrestaurants(@PathVariable Integer id) {
         // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
         return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
     }
 
+    @Operation(description = "Inserisco un Ristorante nel DB")
     @PostMapping("/restaurants")
     public List<RestaurantDtoWNoDelivery> restaurant(@RequestBody FilteredRestaurantRqst dto) {
         List<Restaurant> filtratiDistanza = rRepo.findAll().stream()
@@ -73,22 +81,20 @@ public class RestaurantController {
                 .filter(f -> dto.getFoodTypes().isEmpty()
                         || !Collections.disjoint(f.getFoodTypes(), dto.getFoodTypes()))
                 .map(e -> (RestaurantDtoWNoDelivery) RConv.restaurantDtoWNoDelivery(e)) // Cast esplicito, se
-                                                                                         // necessario
+                                                                                        // necessario
                 .collect(Collectors.toList()); // Usa questo se `toList()` non è disponibile
     }
 
-    @RestController
-    public class RistoranteController {
-
-        @PutMapping("/ristoranti")
-        public ResponseEntity<?> aggiornaRistorante(@RequestBody RestaurantDtoR entita) {
-            try {
-                Restaurant r = RConv.putRestaurantFromDto(entita);
-                return new ResponseEntity<Restaurant>(rRepo.save(r), HttpStatus.OK);
-            } catch (Exception e) {
-                // Gestione dell'errore
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    @Operation(description = "Aggiorno un Ristorante nel DB")
+    @PutMapping("/ristoranti")
+    public ResponseEntity<?> aggiornaRistorante(@RequestBody RestaurantDtoR entita) {
+        try {
+            Restaurant r = RConv.putRestaurantFromDto(entita);
+            return new ResponseEntity<Restaurant>(rRepo.save(r), HttpStatus.OK);
+        } catch (Exception e) {
+            // Gestione dell'errore
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

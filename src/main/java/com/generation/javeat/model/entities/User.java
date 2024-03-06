@@ -2,6 +2,7 @@ package com.generation.javeat.model.entities;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @DiscriminatorValue("user")
+@Schema(description = "User")
 public class User 
 {
     @Id

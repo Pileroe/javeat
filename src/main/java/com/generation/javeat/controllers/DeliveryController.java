@@ -23,6 +23,8 @@ import com.generation.javeat.model.repositories.DeliveryRepository;
 import com.generation.javeat.model.repositories.DishToDeliveryRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 public class DeliveryController {
     @Autowired
@@ -35,16 +37,19 @@ public class DeliveryController {
     RestaurantRepository rRepo;
 
     @GetMapping("/deliveries/{id}")
+    @Operation(description = "Leggo una delivery tramite ID")
     public Delivery getOne(@PathVariable Integer id) {
         return repo.findById(id).get();
     }
 
+    @Operation(description = "Leggo un ordine tramite ID dell' User")
     @GetMapping("/myorders/{id}")
     public List<DeliveryDtoResponse> getAll(@PathVariable Integer id) {
         return repo.findAll().stream().filter(e -> e.getUser().getId() == id).map((f -> conv.deliveryDtoResponse(f)))
                 .toList();
     }
 
+    @Operation(description = "Leggo un ordine tramite ID dell' Owner")
     @GetMapping("/myorders/statistic/{id}")
     public List<DeliverySummaryByWeekDto> getOrdersByWeekStatistic(@PathVariable Integer id) {
         List<Delivery> deliveries = repo.findAll(); // O qualsiasi metodo di filtro necessario
@@ -53,6 +58,7 @@ public class DeliveryController {
     }
 
     // Metodo per post Delivery
+    @Operation(description = "Inserisco una delivery o ordine nel DB")
     @PostMapping("/deliveries")
     public ResponseEntity<?> insert(@RequestBody DeliveryInstRqstDto dto) {
         Delivery op = conv.deliveryDtoRqstDelivery(dto);
@@ -61,6 +67,7 @@ public class DeliveryController {
 
     }
 
+    @Operation(description = "Cancello un ordine tramite ID dal DB")
     @DeleteMapping("/deliveries/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         Optional<Delivery> op = repo.findById(id);

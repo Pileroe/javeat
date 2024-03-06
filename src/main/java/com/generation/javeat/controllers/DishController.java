@@ -1,4 +1,5 @@
 package com.generation.javeat.controllers;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,14 +23,15 @@ import com.generation.javeat.model.repositories.MenuRepository;
 import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
-public class DishController 
-{
+public class DishController {
     @Autowired
     DishRepository dRepo;
 
     @Autowired
-    DishConverter dConv; 
+    DishConverter dConv;
 
     @Autowired
     RestaurantRepository rRepo;
@@ -40,87 +42,76 @@ public class DishController
     @Autowired
     OwnerRepository oRepo;
 
+    @Operation(description = "Leggo tutti i Piatti nel DB")
     @GetMapping("/dishes")
-    public List<Dish> getAllDishes()
-    {
+    public List<Dish> getAllDishes() {
         return dRepo.findAll();
     }
 
+    @Operation(description = "Leggo un Piatto dal DB tramite ID del Ristorante")
     @GetMapping("/dishes/{id}")
-    public ResponseEntity<?> getAllDishesById(@PathVariable Integer id) 
-    {
+    public ResponseEntity<?> getAllDishesById(@PathVariable Integer id) {
         Optional<Restaurant> op = rRepo.findById(id);
-        if (op.isPresent()) 
-        {
+        if (op.isPresent()) {
             Restaurant restaurant = op.get();
             Menu menu = restaurant.getMenu();
             Set<Dish> dishes = menu.getDishes();
             return new ResponseEntity<>(dishes, HttpStatus.OK);
-        } 
-        else 
+        } else
             return new ResponseEntity<>("No restaurant with id " + id, HttpStatus.NOT_FOUND);
     }
-    
 
+    @Operation(description = "Inserisco un Piatto nel DB con ID dell' Owner")
     @PostMapping("/dishes/{id}")
-    public ResponseEntity<?> insertNewDish(@PathVariable Integer id, @RequestBody Dish dish) 
-    {
+    public ResponseEntity<?> insertNewDish(@PathVariable Integer id, @RequestBody Dish dish) {
         Optional<Restaurant> op = oRepo.findById(id).map(Owner::getRestaurant);
-        if (op.isPresent()) 
-        {
+        if (op.isPresent()) {
             Restaurant restaurant = op.get();
             Menu menu = restaurant.getMenu();
-        
+
             dish.setMenu(menu);
             Dish savedDish = dRepo.save(dish);
-            
+
             menu.getDishes().add(savedDish);
             mRepo.save(menu);
-            
+
             return new ResponseEntity<Dish>(savedDish, HttpStatus.CREATED);
-        } 
-        else
+        } else
             return new ResponseEntity<String>("No restaurant with id " + id, HttpStatus.NOT_FOUND);
 
     }
 
-     @PutMapping("/dishes/{id}")
-     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Dish updatedDish) 
-     {
-         Optional<Dish> op = dRepo.findById(id);
-         if (op.isPresent()) 
-         {
-             Dish existingDish = op.get();
-           
-            
-             existingDish.setName(updatedDish.getName());
-             existingDish.setCategory(updatedDish.getCategory());
-             existingDish.setPrice(updatedDish.getPrice());
-             existingDish.setIngredients(updatedDish.getIngredients());
-             existingDish.setImgUrl(updatedDish.getImgUrl());
-            
-             Dish savedDish = dRepo.save(existingDish);
-            
-             return new ResponseEntity<Dish>(savedDish, HttpStatus.OK);
-         } 
-         else 
-             return new ResponseEntity<String>("No dish with id " + id, HttpStatus.NOT_FOUND);
-        
-     }
-
-    @DeleteMapping("/dishes/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) 
-    {
+    @Operation(description = "Modifico un Piatto nel DB tramite ID")
+    @PutMapping("/dishes/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Dish updatedDish) {
         Optional<Dish> op = dRepo.findById(id);
-        if (op.isPresent()) 
-        {
-            dRepo.deleteById(id);
-            return new ResponseEntity<String>("Dish deleted", HttpStatus.OK);
-        } 
-        else 
+        if (op.isPresent()) {
+            Dish existingDish = op.get();
+
+            existingDish.setName(updatedDish.getName());
+            existingDish.setCategory(updatedDish.getCategory());
+            existingDish.setPrice(updatedDish.getPrice());
+            existingDish.setIngredients(updatedDish.getIngredients());
+            existingDish.setImgUrl(updatedDish.getImgUrl());
+
+            Dish savedDish = dRepo.save(existingDish);
+
+            return new ResponseEntity<Dish>(savedDish, HttpStatus.OK);
+        } else
             return new ResponseEntity<String>("No dish with id " + id, HttpStatus.NOT_FOUND);
-        
+
     }
 
+    @Operation(description = "Cancello un Piatto nel DB tramite ID")
+    @DeleteMapping("/dishes/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        Optional<Dish> op = dRepo.findById(id);
+        if (op.isPresent()) {
+            dRepo.deleteById(id);
+            return new ResponseEntity<String>("Dish deleted", HttpStatus.OK);
+        } else
+            return new ResponseEntity<String>("No dish with id " + id, HttpStatus.NOT_FOUND);
+
+    }
 
 }
