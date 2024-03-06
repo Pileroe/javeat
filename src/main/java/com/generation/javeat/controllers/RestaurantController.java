@@ -45,10 +45,16 @@ public class RestaurantController {
 
     }
 
+    @GetMapping("/restaurantowner/{id}")
+    public RestaurantDtoWMenu detailrestaurantowner(@PathVariable Integer id) {
+        // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
+        return RConv.restaurantDtoWMenu(oRepo.findById(id).get().getRestaurant());
+    }
+
     @GetMapping("/restaurants/{id}")
     public RestaurantDtoWMenu detailrestaurants(@PathVariable Integer id) {
         // return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
-        return RConv.restaurantDtoWMenu(oRepo.findById(id).get().getRestaurant());
+        return RConv.restaurantDtoWMenu(rRepo.findById(id).get());
     }
 
     @PostMapping("/restaurants")
