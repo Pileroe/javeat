@@ -14,4 +14,5 @@ public class DishDtoBase
 
     private String name, category; 
     private double price; 
+    private String imgUrl; 
 }

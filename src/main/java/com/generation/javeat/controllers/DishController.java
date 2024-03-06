@@ -97,6 +97,7 @@ public class DishController
              existingDish.setCategory(updatedDish.getCategory());
              existingDish.setPrice(updatedDish.getPrice());
              existingDish.setIngredients(updatedDish.getIngredients());
+             existingDish.setImgUrl(updatedDish.getImgUrl());
             
              Dish savedDish = dRepo.save(existingDish);
             

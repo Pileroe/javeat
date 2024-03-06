@@ -34,6 +34,7 @@ public class Dish
     private Integer id;
     private String name, category; 
     private double price; 
+    private String imgUrl; 
 
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
