@@ -10,9 +10,11 @@ import com.generation.javeat.model.dto.login.LoginRequest;
 import com.generation.javeat.model.dto.register.RegisterRequest;
 import com.generation.javeat.model.dto.user.UserDtoWWithID;
 import com.generation.javeat.model.dtoservices.UserConverter;
+import com.generation.javeat.model.entities.Menu;
 import com.generation.javeat.model.entities.Owner;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.entities.User;
+import com.generation.javeat.model.repositories.MenuRepository;
 import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
 import com.generation.javeat.model.repositories.UserRepository;
@@ -32,6 +34,9 @@ public class UserController {
 
     @Autowired
     RestaurantRepository rRepo;
+
+    @Autowired
+    MenuRepository mRepo;
 
     @PostMapping("/user/login")
     public ResponseEntity<?> userLogin(@RequestBody LoginRequest request) {
@@ -62,7 +67,11 @@ public class UserController {
             Owner o = conv.RegisterToOwner(dto);
             Restaurant r = new Restaurant();
                 rRepo.save(r);
-                o.setRestaurant(r);
+
+            Menu m = new Menu();
+                mRepo.save(m);
+            r.setMenu(m);
+            o.setRestaurant(r);
             if (!isValidPassword(o.getPassword())) {
                 return ResponseEntity.badRequest().body(
                         "La password deve essere lunga almeno 8 caratteri e contenere almeno un carattere speciale (@, #, $, %, &, , !).");

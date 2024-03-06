@@ -30,8 +30,8 @@ public class User
     private String mail;
     private String password;
     private String phone;
-    private Integer positionY;
-    private Integer positionX;
+    private int positionY;
+    private int positionX;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
