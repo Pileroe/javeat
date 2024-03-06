@@ -21,13 +21,13 @@ class JaveatApplicationTests
 	@Test
 	void contextLoads() 
 	{
-		Restaurant r= rRepo.findById(1).get();
+		Restaurant r= rRepo.findById(2).get();
 		Owner o= Owner.builder()
-				.mail("ciao@gmail.com")
-				.password("23456789#*")
-				.phone("32544444")
-				.positionY(50)
-				.positionX(50)
+				.mail("addio@gmail.com")
+				.password("239393#*")
+				.phone("33824444")
+				.positionY(20)
+				.positionX(20)
 				.deliveries(null)
 				.restaurant(r)
 				.build();
