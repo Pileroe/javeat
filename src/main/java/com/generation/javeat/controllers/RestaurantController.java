@@ -4,6 +4,7 @@ import static com.generation.javeat.utils.Utils.calculateDistanceToRestaurant;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,12 +72,14 @@ public class RestaurantController {
     @Operation(description = "Inserisco un Ristorante nel DB")
     @PostMapping("/restaurants")
     public List<RestaurantDtoWNoDelivery> restaurant(@RequestBody FilteredRestaurantRqst dto) {
-        List<Restaurant> filtratiDistanza = rRepo.findAll().stream()
-                .filter(f -> calculateDistanceToRestaurant(f, dto.getPositionX(), dto.getPositionY()) <= dto
-                        .getDistance())
-                .toList();
+        Stream<Restaurant> restaurantStream = rRepo.findAll().stream();
 
-        return filtratiDistanza.stream()
+        // Filtra per distanza solo se le posizioni sono definite
+        if (dto.getPositionX() != null && dto.getPositionY() != null) {
+            restaurantStream = restaurantStream.filter(f -> calculateDistanceToRestaurant(f, dto.getPositionX(), dto.getPositionY()) <= dto.getDistance());
+        }
+
+        return restaurantStream
                 .filter(f -> dto.getFoodTypes().isEmpty()
                         || !Collections.disjoint(f.getFoodTypes(), dto.getFoodTypes()))
                 .map(e -> (RestaurantDtoWNoDelivery) RConv.restaurantDtoWNoDelivery(e)) // Cast esplicito, se
