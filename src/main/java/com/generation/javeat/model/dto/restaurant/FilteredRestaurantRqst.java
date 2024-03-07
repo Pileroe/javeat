@@ -16,4 +16,5 @@ public class FilteredRestaurantRqst {
     private Integer positionX; 
     private Integer positionY; 
     private Integer distance;
+    private double deliveryPricePerUnit;
 }
