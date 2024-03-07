@@ -1,8 +1,6 @@
 package com.generation.javeat.model.dto.delivery;
 import java.time.LocalDateTime;
 import java.util.List;
-import com.generation.javeat.model.dtoservices.DeliveryConverter;
-import com.generation.javeat.model.entities.DishToDelivery;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

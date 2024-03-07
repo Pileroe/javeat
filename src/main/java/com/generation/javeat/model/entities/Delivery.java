@@ -65,15 +65,10 @@ public class Delivery {
     }
 
     public double getRiderRevenue()
-    {
-        double totalRevenue = 0.0;
-        for (DishToDelivery dishDelivery : dishesDeliveries) 
-                totalRevenue += dishDelivery.getPrice();
-        
-        
-        double distanceCost= restaurant.getDeliveryPricePerUnit() * distance;
+    {  
+        double distanceCost= restaurant.getDeliveryPricePerUnit() * (distance/200);
 
-        return totalRevenue-distanceCost;
+        return distanceCost;
     }
 
 
