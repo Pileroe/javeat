@@ -52,7 +52,7 @@ public class DeliveryController {
     @Operation(description = "Leggo un ordine tramite ID dell' Owner")
     @GetMapping("/myorders/statistic/{id}")
     public List<DeliverySummaryByWeekDto> getOrdersByWeekStatistic(@PathVariable Integer id) {
-        List<Delivery> deliveries = repo.findAll(); // O qualsiasi metodo di filtro necessario
+        List<Delivery> deliveries = repo.findAll().stream().filter(f-> f.getRestaurant().getOwner().getId()==id).toList();
         Restaurant rest = rRepo.findAll().stream().filter(r -> r.getOwner().getId() == id).toList().get(0);
         return conv.convertToOrderSummaryByWeek(deliveries, rest);
     }
