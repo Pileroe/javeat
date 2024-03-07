@@ -21,7 +21,6 @@ import com.generation.javeat.model.dtoservices.RestaurantConverter;
 import com.generation.javeat.model.entities.Restaurant;
 import com.generation.javeat.model.repositories.OwnerRepository;
 import com.generation.javeat.model.repositories.RestaurantRepository;
-import com.generation.javeat.model.repositories.UserRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 
