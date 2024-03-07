@@ -70,6 +70,8 @@ public class UserController {
         if (dto.isOwner()) {
             Owner o = conv.RegisterToOwner(dto);
             Restaurant r = new Restaurant();
+            r.setPositionX(o.getPositionX());
+            r.setPositionY(o.getPositionY());
             rRepo.save(r);
 
             Menu m = new Menu();

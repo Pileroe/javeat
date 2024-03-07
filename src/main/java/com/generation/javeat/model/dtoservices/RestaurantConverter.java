@@ -98,6 +98,7 @@ public class RestaurantConverter {
                 .phone(r.getPhone())
                 .openingHour(r.getOpeningHour())
                 .closingHour(r.getClosingHour())
+                .deliveryPricePerUnit(r.getDeliveryPricePerUnit())
                 .maxDeliveryDistance(r.getMaxDeliveryDistance())
                 .menu(rRepo.findById(r.getId()).get().getMenu().getDishes().stream().map(d -> dConv.dishDtoW(d))
                         .toList())

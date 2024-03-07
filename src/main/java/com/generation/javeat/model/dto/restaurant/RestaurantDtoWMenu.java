@@ -17,5 +17,6 @@ public class RestaurantDtoWMenu extends RestaurantDtoWNoDelivery
 {
     private String phone; 
     private int openingHour, closingHour, maxDeliveryDistance;
+    private double deliveryPricePerUnit;
     private List<DishDtoW> menu; 
 }
