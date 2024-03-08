@@ -16,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 public class DeliveryDtoResponse 
 {
     private Integer orderId;
+    private String restaurantName;
     private String paymentMethod;
     private String notes;
     private LocalDateTime expectedArrival; 

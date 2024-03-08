@@ -76,10 +76,11 @@ public class DeliveryConverter {
                 .orderId(d.getId())
                 .paymentMethod(d.getPaymentMethod())
                 .notes(d.getNotes())
+                .restaurantName(d.getRestaurant().getName())
                 .expectedArrival(d.getExpected_arrival())
                 .dishes(d.getDishesDeliveries().stream().map(a-> conv.dishDtoWname(a)).toList())
                 .dishesPrice(d.getDishesPrice())
-                .riderRevenue(d.getRiderRevenue())
+                .riderRevenue(7)
                 .totalPrice(d.getTotalPrice())
                 .build();
     }
